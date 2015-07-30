@@ -1,1 +1,1 @@
-5h GitHubin asennus ja aiheen kuvaus 
+20150730 - 5h GitHubin asennus ja aiheen kuvaus.
