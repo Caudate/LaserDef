@@ -36,11 +36,11 @@ public class Peli implements Paivitettava {
         if (rng.nextInt(50) < 1) {
             int arvottu = rng.nextInt(4);
             if (arvottu == 0) {
-                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, 2, rng.nextInt(this.leveys), this.korkeus, 5));
+                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, 3, rng.nextInt(this.leveys), this.korkeus, 5));
             } else if (arvottu == 1) {
                 this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, 3, rng.nextInt(this.leveys), 0, 5));
             } else if (arvottu == 2) {
-                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, 2, 0, rng.nextInt(this.korkeus), 5));
+                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, 3, 0, rng.nextInt(this.korkeus), 5));
             } else if (arvottu == 3) {
                 this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, 3, this.leveys, rng.nextInt(this.korkeus), 5));
             }
@@ -57,6 +57,7 @@ public class Peli implements Paivitettava {
         for (int i = 0; i < this.laaserit.size(); i++) {
             if (this.laaserit.get(i).isPoistetaanko()) {
                 this.laaserit.remove(i);
+                i--;
             }
         }
     }

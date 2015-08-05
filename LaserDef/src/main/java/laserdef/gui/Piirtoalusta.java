@@ -13,25 +13,28 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Peli peli;
     
     public Piirtoalusta(Peli peli) {
-        super.setBackground(Color.WHITE);
+        super.setBackground(Color.BLUE);
         this.peli = peli;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        
         super.paintComponents(g);
         for (Laaseri laaseri : this.peli.getLaaserit()) {
             g.setColor(laaseri.getVari());
             if (laaseri.isPoistetaanko() == false) {
-                for (LaaserOsa osa : laaseri.getOsat()) {
-                    g.fillRoundRect(osa.getX(), osa.getY(), osa.getLeveys(), osa.getKorkeus(), 2, 2);
+                for (int i = 0; i < laaseri.getOsat().size(); i++) {
+                    g.fill3DRect(laaseri.getOsat().get(i).getX(), laaseri.getOsat().get(i).getY(), laaseri.getOsat().get(i).getLeveys(), laaseri.getOsat().get(i).getKorkeus(), true);
                 }
             } else {
                 for (LaaserOsa osa : laaseri.getOsat()) {
-                    g.clearRect(osa.getX(), osa.getY(), osa.getLeveys(), osa.getKorkeus());
+                    g.setColor(super.getBackground());
+                    g.fillRect(osa.getX(), osa.getY(), osa.getLeveys(), osa.getKorkeus());
                 }
             }
         }
+
     }
     
     @Override

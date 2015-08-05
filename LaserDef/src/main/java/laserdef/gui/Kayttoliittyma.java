@@ -12,6 +12,7 @@ public class Kayttoliittyma implements Runnable {
 
     private Peli peli;
     private Piirtoalusta piirturi;
+    private JFrame frame;
     
     public Kayttoliittyma(Peli peli) {
         this.peli = peli;
@@ -19,8 +20,8 @@ public class Kayttoliittyma implements Runnable {
     
     @Override
     public void run() {
-        JFrame frame = luoFrame("LaserDef", peli.getLeveys(), peli.getKorkeus());
-        frame.setVisible(true);
+        this.frame = luoFrame("LaserDef", peli.getLeveys(), peli.getKorkeus());
+        this.frame.setVisible(true);
         this.looppaa();
     }
     
