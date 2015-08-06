@@ -8,14 +8,14 @@ public class Pommi extends Kohde {
     int voimakkuus;
     int pisteet;
     
-    public Pommi(int pisteet, int voimakkuus, int aikaRajahdykseen, int x, int y, int korkeus, int koko) {
-        super(x, y, korkeus, koko);
+    public Pommi(int pisteet, int voimakkuus, int aikaRajahdykseen, int x, int y, int korkeus, int leveys) {
+        super(x, y, korkeus, leveys);
         this.aikaRajahdykseen = aikaRajahdykseen;
         this.voimakkuus = voimakkuus;
         this.pisteet = pisteet;
     }
     
-    public int otaPisteet() {
+    public int otaSaadutPisteet() {
         return this.pisteet + this.aikaRajahdykseen;
     }
     

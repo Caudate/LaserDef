@@ -44,17 +44,17 @@ public class Laaseri {
     
     public void kasva() {
         if (this.kasvaako) {
-            for (int i=0; i < nopeus; i++) {
-                if (suunta == Suunta.ALAS) {
+            for (int i=0; i < this.nopeus; i++) {
+                if (this.suunta == Suunta.ALAS) {
                     this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
                     this.y++;
-                } else if (suunta == Suunta.YLOS) {
+                } else if (this.suunta == Suunta.YLOS) {
                     this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
                     this.y--;
-                } else if (suunta == Suunta.VASEN) {
+                } else if (this.suunta == Suunta.VASEN) {
                     this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
                     this.x--;
-                } else if (suunta == Suunta.OIKEA) {
+                } else if (this.suunta == Suunta.OIKEA) {
                     this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
                     this.x++;
                 } 
@@ -89,6 +89,8 @@ public class Laaseri {
     public void setPoistetaanko(boolean poistetaanko) {
         this.poistetaanko = poistetaanko;
     }
-    
-    
+
+    public Suunta getSuunta() {
+        return suunta;
+    }
 }

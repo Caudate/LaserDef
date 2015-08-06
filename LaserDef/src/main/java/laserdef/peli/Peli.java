@@ -33,16 +33,16 @@ public class Peli implements Paivitettava {
     @Override
     public void paivita() {
         this.poistaPoistettavatLaaserit();
-        if (rng.nextInt(50) < 1) {
+        if (rng.nextInt(30) < 1) {
             int arvottu = rng.nextInt(4);
             if (arvottu == 0) {
-                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, 3, rng.nextInt(this.leveys), this.korkeus, 5));
+                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, 10, rng.nextInt(this.leveys), this.korkeus, 5));
             } else if (arvottu == 1) {
-                this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, 3, rng.nextInt(this.leveys), 0, 5));
+                this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, 8, rng.nextInt(this.leveys), 0, 5));
             } else if (arvottu == 2) {
-                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, 3, 0, rng.nextInt(this.korkeus), 5));
+                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, 15, 0, rng.nextInt(this.korkeus), 5));
             } else if (arvottu == 3) {
-                this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, 3, this.leveys, rng.nextInt(this.korkeus), 5));
+                this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, 7, this.leveys, rng.nextInt(this.korkeus), 5));
             }
         }
         for (Laaseri laaseri : this.laaserit) {

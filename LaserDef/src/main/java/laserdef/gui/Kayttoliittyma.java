@@ -40,7 +40,7 @@ public class Kayttoliittyma implements Runnable {
     }
     
     public void looppaa() {
-        int FPS = 50;
+        int FPS = 25;
         int ohitettavaAika = 1000 / FPS;
         long seuraavaPaivitys = System.currentTimeMillis();
         long odotusaika = 0;
@@ -52,6 +52,7 @@ public class Kayttoliittyma implements Runnable {
 
             seuraavaPaivitys += ohitettavaAika;
             odotusaika = seuraavaPaivitys - System.currentTimeMillis();
+            System.out.println(odotusaika);
             if(odotusaika >= 0) {
                 try {
                     Thread.sleep(odotusaika);
