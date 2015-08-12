@@ -27,12 +27,12 @@ public class Laaseri {
         this.paksuus = paksuus;
         this.kasvaako = true;
         this.poistetaanko = false;
-        this.osat = new ArrayList<LaaserOsa>();
+        this.osat = new ArrayList<>();
         this.kasva();
     }
     
     public boolean osuuko(Kohde kohde) {
-        if (this.osat.get(this.osat.size()-1).getX() == kohde.getX() && this.osat.get(this.osat.size()-1).getY() == kohde.getY()) {
+        if (this.x == kohde.getX() && this.y == kohde.getY()) {
             return true;
         }
         return false;
@@ -44,21 +44,19 @@ public class Laaseri {
     
     public void kasva() {
         if (this.kasvaako) {
-            for (int i=0; i < this.nopeus; i++) {
-                if (this.suunta == Suunta.ALAS) {
-                    this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
-                    this.y++;
-                } else if (this.suunta == Suunta.YLOS) {
-                    this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
-                    this.y--;
-                } else if (this.suunta == Suunta.VASEN) {
-                    this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
-                    this.x--;
-                } else if (this.suunta == Suunta.OIKEA) {
-                    this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
-                    this.x++;
-                } 
-            }
+            if (this.suunta == Suunta.ALAS) {
+                this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
+                this.y++;
+            } else if (this.suunta == Suunta.YLOS) {
+                this.osat.add(new LaaserOsa(this.x, this.y, this.palanLeveys, this.paksuus));
+                this.y--;
+            } else if (this.suunta == Suunta.VASEN) {
+                this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
+                this.x--;
+            } else if (this.suunta == Suunta.OIKEA) {
+                this.osat.add(new LaaserOsa(this.x, this.y, this.paksuus, this.palanLeveys));
+                this.x++;
+            } 
         }
     }
     
@@ -92,5 +90,9 @@ public class Laaseri {
 
     public Suunta getSuunta() {
         return suunta;
+    }
+
+    public int getNopeus() {
+        return nopeus;
     }
 }

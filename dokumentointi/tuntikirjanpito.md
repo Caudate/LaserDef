@@ -2,4 +2,7 @@
 20150802 - 7h Ohjelma koodin aloitus. Kohteiden luokkien tekoa.
 20150802 - 6h Koodattu ohjelman ensimmäinen ajettava versio.
 20150805 - 2h Korjauksia pajassa
-20150806 - JUnit testejä ja Luokkakaavio
+20150806 - 4h JUnit testejä ja Luokkakaavio
+20150809 - 1h Taustakuva toiminto lisatty
+20150811 - 3h Törmäystoiminto listätty ja yritetty bugien korjausta
+20150812 - 5h JUnit testetä ja yritetty bugein korjausta jälleen tuloksetta

@@ -31,15 +31,19 @@ public abstract class Kohde {
     }
 
     public void setKorkeus(int korkeus) {
-        this.korkeus = korkeus;
+        if (korkeus > 0) {
+            this.korkeus = korkeus;
+        }
     }
 
     public int getKorkeus() {
         return korkeus;
     }
 
-    public void setLeveys(int koko) {
-        this.leveys = koko;
+    public void setLeveys(int leveys) {
+        if (leveys > 0) {
+            this.leveys = leveys;
+        }
     }
 
     public int getLeveys() {

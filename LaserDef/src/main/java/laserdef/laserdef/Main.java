@@ -9,9 +9,8 @@ public class Main {
 
  
     public static void main(String[] args) {
-        Peli laserDef = new Peli(600, 600);
+        Peli laserDef = new Peli(600, 600, 1);
         Kayttoliittyma kayttis = new Kayttoliittyma(laserDef);
         kayttis.run();
     }
-    
 }

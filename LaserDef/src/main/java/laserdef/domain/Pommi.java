@@ -18,6 +18,4 @@ public class Pommi extends Kohde {
     public int otaSaadutPisteet() {
         return this.pisteet + this.aikaRajahdykseen;
     }
-    
-    
 }
