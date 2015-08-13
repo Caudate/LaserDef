@@ -20,7 +20,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     public Piirtoalusta(Peli peli) {
         this.peli = peli;
         try {                
-          this.taustaKuva = ImageIO.read(new File("res/paint.jpg"));
+          this.taustaKuva = ImageIO.read(getClass().getResourceAsStream("/paint.jpg"));
        } catch (IOException ex) {
        }
     }
