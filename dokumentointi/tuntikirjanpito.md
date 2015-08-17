@@ -6,3 +6,5 @@
 20150809 - 1h Taustakuva toiminto lisatty
 20150811 - 3h Törmäystoiminto listätty ja yritetty bugien korjausta
 20150812 - 5h JUnit testetä ja yritetty bugein korjausta jälleen tuloksetta
+20150815 - 2h Törmäys luo pommit toiminto lisätty
+20150817 - 2h Bugit korjattu. Pommit ja laaserit katoavat pommin räjähtäessä

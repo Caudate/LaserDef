@@ -40,28 +40,40 @@ public class Kayttoliittyma implements Runnable {
     }
     
     public void looppaa() {
-        int FPS = 50;
-        int ohitettavaAika = 1000 / FPS;
-        long seuraavaPaivitys = System.currentTimeMillis();
-        long odotusaika = 0;
-        boolean onkoPaalla = true;
+        long initialTime = System.nanoTime();
+        final double pelinPaivitysAika = 1000000000 / 50;
+        final double framenPaivitysAika = 1000000000 / 50;
+        double deltaPelinPaivitys = 0, deltaFramenPaivitys = 0;
+        int framet = 0, tikit = 0;
+        long timer = System.currentTimeMillis();
 
-        while(onkoPaalla) {
-            this.peli.paivita();
-            this.piirturi.paivita();
+            while (true) {
 
-            seuraavaPaivitys += ohitettavaAika;
-            odotusaika = seuraavaPaivitys - System.currentTimeMillis();
-            if(odotusaika >= 0) {
-                try {
-                    Thread.sleep(odotusaika);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                System.out.println("Peli ei päivity tarpeeksi nopeasti");
-            }
-        }    
+                long currentTime = System.nanoTime();
+                deltaPelinPaivitys += (currentTime - initialTime) / pelinPaivitysAika;
+                deltaFramenPaivitys += (currentTime - initialTime) / framenPaivitysAika;
+                initialTime = currentTime;
+
+                    if (deltaPelinPaivitys >= 1) {
+                        this.peli.paivita();
+                        tikit++;
+                        deltaPelinPaivitys--;
+                    }
+
+                    if (deltaFramenPaivitys >= 1) {
+                        this.piirturi.paivita();
+                        framet++;
+                        deltaFramenPaivitys--;
+                    }
+
+                    if (System.currentTimeMillis() - timer > 1000) {
+                        if (true) {
+                            System.out.println(String.format("UPS: %s, FPS: %s", tikit, framet));
+                        }
+                        framet = 0;
+                        tikit = 0;
+                        timer += 1000;
+                    }
+            }   
     }
 }
