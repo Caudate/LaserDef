@@ -14,7 +14,6 @@ public class LaaseriTest {
     Laaseri laaseriAlas;
     Laaseri laaseriOikea;
     Laaseri laaseriVasen;
-    LaaserOsa osa;
     
     @Before
     public void setVoid() {
@@ -22,7 +21,6 @@ public class LaaseriTest {
         this.laaseriAlas = new Laaseri(Suunta.ALAS, Color.gray, 1, 0, 0, 1);
         this.laaseriOikea = new Laaseri(Suunta.OIKEA, Color.gray, 1, 0, 0, 1);
         this.laaseriVasen = new Laaseri(Suunta.VASEN, Color.gray, 1, 0, 0, 1);
-        this.osa = new LaaserOsa(0, 0, 1, 1);
     }
     
     @Test
@@ -30,15 +28,16 @@ public class LaaseriTest {
         assertTrue(this.laaseriYlos!=null);   
     }
     
-//    @Test
-//    public void osuukoPalauttaaTrueKunOsuu() {
-//        assertTrue(this.laaseriYlos.osuuko(this.osa));
-//    }
+    @Test
+    public void osuukoPalauttaaTrueKunOsuu() {
+        LaaserOsa osa = new LaaserOsa(laaseriAlas.getX(), laaseriAlas.getY(), 1, 1);
+        assertTrue(this.laaseriAlas.osuuko(osa));
+    }
     
     @Test
     public void osuukoPalauttaaFalseKunEiOsu() {
-        LaaserOsa osa2 = new LaaserOsa(1, 1, 1, 1);
-        assertFalse(this.laaseriYlos.osuuko(osa2));
+        LaaserOsa osa = new LaaserOsa(1, 1, 1, 1);
+        assertFalse(this.laaseriYlos.osuuko(osa));
     }
     
     @Test

@@ -63,20 +63,8 @@ public class KohdeTest {
     }
     
     @Test
-    public void setKorkeusEiAsetaAlleYhden() {
-        this.kohde.setKorkeus(0);
-        assertEquals(1, this.kohde.getKorkeus());
-    }
-    
-    @Test
     public void setLeveysAsettaaOikein() {
         this.kohde.setLeveys(3);
         assertEquals(3, this.kohde.getLeveys());
-    }
-    
-    @Test
-    public void setLeveysEiAsetaAlleYhden() {
-        this.kohde.setLeveys(0);
-        assertEquals(1, this.kohde.getLeveys());
     }
 }

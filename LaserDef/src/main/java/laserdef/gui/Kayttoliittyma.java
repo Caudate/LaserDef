@@ -30,6 +30,7 @@ public class Kayttoliittyma implements Runnable {
         frame1.setPreferredSize(new Dimension(leveys, korkeus));
         frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame1.getContentPane());
+        frame1.addMouseListener(new HiirenKuuntelija(this.peli));
         frame1.pack();
         return frame1;
     }
@@ -68,7 +69,7 @@ public class Kayttoliittyma implements Runnable {
 
                     if (System.currentTimeMillis() - timer > 1000) {
                         if (true) {
-                            System.out.println(String.format("UPS: %s, FPS: %s", tikit, framet));
+//                            System.out.println(String.format("UPS: %s, FPS: %s", tikit, framet));
                         }
                         framet = 0;
                         tikit = 0;

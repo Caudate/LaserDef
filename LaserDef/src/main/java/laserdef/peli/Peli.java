@@ -73,7 +73,7 @@ public class Peli implements Paivitettava {
                    laaseri.setKasvaako(false);
                    i = laaseri.getNopeus();
                    if (!onkoKoordinaatissaPommi(laaseri.getX(), laaseri.getY())) {
-                       this.pommit.add(new Pommi(1, 1, 160 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
+                       this.pommit.add(new Pommi(1, 1, 300 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
                    }
                 }
             }
@@ -89,7 +89,6 @@ public class Peli implements Paivitettava {
             Laaseri laaser = iterator.next();
             if (laaser.isPoistetaanko()) {
                 iterator.remove();
-                System.out.println("laaseri poistettu");
             }
         }
     }
@@ -126,10 +125,9 @@ public class Peli implements Paivitettava {
     }
     
     
-    public int rajaytaPommi(Pommi pommi) {
+    public void rajaytaPommi(Pommi pommi) {
         pommi.setPoistetaanko(true);
         poistaPomminLaaseri(pommi);
-        return pommi.otaSaadutPisteet();
     }
     
     public void poistaPomminLaaseri(Pommi pommi) {
@@ -146,10 +144,22 @@ public class Peli implements Paivitettava {
             Pommi pommi = iterator.next();
             if (pommi.isPoistetaanko()) {
                 iterator.remove();
-                System.out.println("Pommi poistettu");
             }
         }
     }
+    
+    public void hiirellaPainettu(int x, int y) {
+        for (Pommi pommi : pommit) {
+            if (x >= pommi.getX() && x < pommi.getX() + pommi.getLeveys() &&
+                y >= pommi.getY() && y < pommi.getX() + pommi.getLeveys()) {
+                this.pisteet += pommi.otaSaadutPisteet();
+                System.out.println("osuma pommiin havaittu");
+                rajaytaPommi(pommi);
+            }
+        }
+    }
+    
+    // getterit ja setterit
     
     public int getKorkeus() {
         return korkeus;

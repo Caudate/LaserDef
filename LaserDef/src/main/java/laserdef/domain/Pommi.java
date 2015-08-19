@@ -31,12 +31,16 @@ public class Pommi extends Kohde {
         }
         return false;
     }
-
+    
     public boolean isPoistetaanko() {
         return poistetaanko;
     }
 
     public void setPoistetaanko(boolean poistetaanko) {
         this.poistetaanko = poistetaanko;
+    }
+
+    public int getAikaRajahdykseen() {
+        return aikaRajahdykseen;
     }
 }

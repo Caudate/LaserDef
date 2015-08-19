@@ -95,4 +95,8 @@ public class Laaseri {
     public int getNopeus() {
         return nopeus;
     }
+
+    public void setNopeus(int nopeus) {
+        this.nopeus = nopeus;
+    }
 }

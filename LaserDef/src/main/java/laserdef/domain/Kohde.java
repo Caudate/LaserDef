@@ -31,9 +31,7 @@ public abstract class Kohde {
     }
 
     public void setKorkeus(int korkeus) {
-        if (korkeus > 0) {
             this.korkeus = korkeus;
-        }
     }
 
     public int getKorkeus() {
@@ -41,9 +39,7 @@ public abstract class Kohde {
     }
 
     public void setLeveys(int leveys) {
-        if (leveys > 0) {
             this.leveys = leveys;
-        }
     }
 
     public int getLeveys() {
