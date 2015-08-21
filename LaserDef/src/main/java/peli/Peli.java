@@ -29,6 +29,7 @@ public class Peli implements Paivitettava {
     private int pisteet;
     private int laaserienPaksuus = 5;
     private int pommienSivunKoko = 50;
+    private boolean seuraavaHorisontaalinen = true;
 
     public Peli(int korkeus, int leveys, int nopeus) {
         this.korkeus = korkeus;
@@ -67,18 +68,27 @@ public class Peli implements Paivitettava {
     /**
      * Arpoo ensin tehdäänkö tällä tikillä laaseri. 
      * Jos tehdään niin arpoo uuden laaserin suunnan ja nopeuden ja luo tämän.
+     * Tekee vuorotellen horisontaalisia ja vertikaalisia laasereita.
      */
     public void arvoUusiLaaseri() {
-        if (rng.nextInt(120) < 1) { 
-            int arvottu = rng.nextInt(4);
-            if (arvottu == 0) {
-                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, (rng.nextInt(3)+1)*this.nopeus, rng.nextInt(this.leveys), this.korkeus, this.laaserienPaksuus));
-            } else if (arvottu == 1) {
-                this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, (rng.nextInt(3)+1)*this.nopeus, rng.nextInt(this.leveys), 0, this.laaserienPaksuus));
-            } else if (arvottu == 2) {
-                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, (rng.nextInt(3)+1)*this.nopeus, 0, rng.nextInt(this.korkeus), this.laaserienPaksuus));
-            } else if (arvottu == 3) {
-                this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, (rng.nextInt(3)+1)*this.nopeus, this.leveys, rng.nextInt(this.korkeus), this.laaserienPaksuus));
+        int nopeusVaihtelunTasaaja = 1;
+        if (this.nopeus > 4) {
+            nopeusVaihtelunTasaaja = this.nopeus - 3;
+        }
+        if (rng.nextInt(60) < 1) {
+            int arvottu = rng.nextInt(1);
+            if (arvottu == 0 && seuraavaHorisontaalinen) {
+                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys - 40) + 20, this.korkeus, this.laaserienPaksuus));
+                seuraavaHorisontaalinen = false;
+            } else if (arvottu == 1 && seuraavaHorisontaalinen) {
+                this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys -40) + 20, 0, this.laaserienPaksuus));
+                seuraavaHorisontaalinen = false;
+            } else if (arvottu == 0 && !seuraavaHorisontaalinen) {
+                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), 0, rng.nextInt(this.korkeus - 40) + 20, this.laaserienPaksuus));
+                seuraavaHorisontaalinen = true;
+            } else if (arvottu == 1 && !seuraavaHorisontaalinen) {
+                this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), this.leveys, rng.nextInt(this.korkeus - 40) + 20, this.laaserienPaksuus));
+                seuraavaHorisontaalinen = true;
             }
         }
     }
@@ -98,7 +108,7 @@ public class Peli implements Paivitettava {
                    laaseri.setKasvaako(false);
                    i = laaseri.getNopeus();
                    if (!onkoKoordinaatissaPommi(laaseri.getX(), laaseri.getY())) {
-                       this.pommit.add(new Pommi(1, 1, 300 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
+                       this.pommit.add(new Pommi(1, 1, 200 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
                    }
                 }
             }
@@ -212,11 +222,13 @@ public class Peli implements Paivitettava {
      */
     public void painettu(int x, int y) {
         for (Pommi pommi : pommit) {
-            if (x >= pommi.getX() && x < pommi.getX() + pommi.getLeveys() &&
-                y >= pommi.getY() && y < pommi.getX() + pommi.getLeveys()) {
+            if (x >= pommi.getX() - pommi.getLeveys()/2
+                && x < pommi.getX() + pommi.getLeveys()/2 + 1
+                && y >= pommi.getY() - pommi.getKorkeus()/2
+                && y < pommi.getY() + pommi.getKorkeus()/2 + 1) {
                 this.pisteet += pommi.otaSaadutPisteet();
-                System.out.println("osuma pommiin havaittu");
                 rajaytaPommi(pommi);
+                System.out.println(this.pisteet);
             }
         }
     }

@@ -16,7 +16,7 @@ public class HiirenKuuntelija extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("PAINALLUS HAVAITTU");
+        System.out.println("X: " + e.getX() + " Y: " + e.getY());
         this.peli.painettu(e.getX(), e.getY());
     }
 }

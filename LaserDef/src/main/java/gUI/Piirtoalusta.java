@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,6 +26,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     
     public Piirtoalusta(Peli peli) {
         this.peli = peli;
+        this.addMouseListener(new HiirenKuuntelija(peli));
         try {                
           this.taustaKuva = ImageIO.read(getClass().getResourceAsStream("/paint.jpg"));
           this.pommiKuva = this.teeKuva("/nuke_icon.jpg", this.peli.getPommienSivunKoko(), this.peli.getPommienSivunKoko());
