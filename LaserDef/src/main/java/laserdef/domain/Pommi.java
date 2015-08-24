@@ -1,5 +1,5 @@
 
-package domain;
+package laserdef.domain;
 
 
 public class Pommi extends Kohde {
@@ -43,4 +43,9 @@ public class Pommi extends Kohde {
     public int getAikaRajahdykseen() {
         return aikaRajahdykseen;
     }
+
+    public int getVoimakkuus() {
+        return voimakkuus;
+    }
+    
 }

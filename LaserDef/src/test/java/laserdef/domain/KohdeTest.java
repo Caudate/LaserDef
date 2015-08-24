@@ -1,7 +1,7 @@
 
-package domain;
+package laserdef.domain;
 
-import domain.Kohde;
+import laserdef.domain.Kohde;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;

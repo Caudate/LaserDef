@@ -1,8 +1,8 @@
 
-package domain;
+package laserdef.domain;
 
-import domain.LaaserOsa;
-import domain.Laaseri;
+import laserdef.domain.LaaserOsa;
+import laserdef.domain.Laaseri;
 import java.awt.Color;
 import main.Suunta;
 import org.junit.Before;

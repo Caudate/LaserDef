@@ -1,5 +1,5 @@
 
-package domain;
+package laserdef.domain;
 
 /**
  * Abstrackti luokka, joka antaa pelin kohteelle sijainnin ja koon.

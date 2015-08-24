@@ -1,5 +1,5 @@
 
-package domain;
+package laserdef.domain;
 
 /**
  * Luokka kohteille, joita Laaseri sisältää.

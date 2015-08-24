@@ -3,7 +3,7 @@ package gUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import peli.Peli;
+import laserdef.peli.Peli;
 
 
 public class HiirenKuuntelija extends MouseAdapter {

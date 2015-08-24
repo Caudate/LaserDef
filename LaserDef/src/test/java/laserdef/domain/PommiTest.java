@@ -1,7 +1,7 @@
 
-package domain;
+package laserdef.domain;
 
-import domain.Pommi;
+import laserdef.domain.Pommi;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

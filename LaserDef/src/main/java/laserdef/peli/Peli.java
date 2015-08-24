@@ -1,15 +1,15 @@
 
-package peli;
+package laserdef.peli;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import domain.LaaserOsa;
-import domain.Laaseri;
-import domain.Pommi;
-import domain.Seina;
+import laserdef.domain.LaaserOsa;
+import laserdef.domain.Laaseri;
+import laserdef.domain.Pommi;
+import laserdef.domain.Seina;
 import gUI.Paivitettava;
 import main.Suunta;
 
@@ -26,12 +26,15 @@ public class Peli implements Paivitettava {
     private List<Seina> seinat;
     private Random rng;
     private int nopeus;
-    private int pisteet;
-    private int laaserienPaksuus = 5;
+    private int pisteet = 0;
+    private int elama = 100;
+    private int laaserienPaksuus = 7;
     private int pommienSivunKoko = 50;
     private boolean seuraavaHorisontaalinen = true;
+    private int laaserienVali = 40; //Monenko päivityksen välein tulee uusi laaseri.
+    private int paivitysTilanne = laaserienVali;
 
-    public Peli(int korkeus, int leveys, int nopeus) {
+    public Peli(int leveys, int korkeus, int nopeus) {
         this.korkeus = korkeus;
         this.leveys = leveys;
         this.laaserit = new ArrayList<>();
@@ -39,7 +42,6 @@ public class Peli implements Paivitettava {
         this.seinat = new ArrayList<>();
         this.rng = new Random();
         this.nopeus = nopeus;
-        this.pisteet = 0;
     }
     
     /**
@@ -53,14 +55,18 @@ public class Peli implements Paivitettava {
     /**
      * Paivittaa pelin tilanteen.
      * poistaa poistettavat pommit ja laaserit.
-     * Arpoo mahdollisia uusia laasereita.
+     * Tekee uuden laaserin, jos on kulunut tarpeeksi päivityksiä edellisestä.
      * Kasvattaa kaikkia laasereita ja tikittää pommeja.
      */
     @Override
     public void paivita() {
         poistaPoistettavatLaaserit();
         poistaPoistettavatPommit();
-        arvoUusiLaaseri();
+        if (paivitysTilanne == laaserienVali) {
+            arvoUusiLaaseri();
+            paivitysTilanne = 0;
+        }
+        paivitysTilanne++;
         kasvataLaasereita();
         tikitaPommeja();
     }
@@ -75,21 +81,19 @@ public class Peli implements Paivitettava {
         if (this.nopeus > 4) {
             nopeusVaihtelunTasaaja = this.nopeus - 3;
         }
-        if (rng.nextInt(60) < 1) {
-            int arvottu = rng.nextInt(1);
-            if (arvottu == 0 && seuraavaHorisontaalinen) {
-                this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys - 40) + 20, this.korkeus, this.laaserienPaksuus));
-                seuraavaHorisontaalinen = false;
-            } else if (arvottu == 1 && seuraavaHorisontaalinen) {
-                this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys -40) + 20, 0, this.laaserienPaksuus));
-                seuraavaHorisontaalinen = false;
-            } else if (arvottu == 0 && !seuraavaHorisontaalinen) {
-                this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), 0, rng.nextInt(this.korkeus - 40) + 20, this.laaserienPaksuus));
-                seuraavaHorisontaalinen = true;
-            } else if (arvottu == 1 && !seuraavaHorisontaalinen) {
-                this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), this.leveys, rng.nextInt(this.korkeus - 40) + 20, this.laaserienPaksuus));
-                seuraavaHorisontaalinen = true;
-            }
+        int arvottu = rng.nextInt(2);
+        if (arvottu == 0 && seuraavaHorisontaalinen) {
+            this.laaserit.add(new Laaseri(Suunta.YLOS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys - 100) + 50, this.korkeus, this.laaserienPaksuus));
+            seuraavaHorisontaalinen = false;
+        } else if (arvottu == 1 && seuraavaHorisontaalinen) {
+            this.laaserit.add(new Laaseri(Suunta.ALAS, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), rng.nextInt(this.leveys -100) + 50, 0, this.laaserienPaksuus));
+            seuraavaHorisontaalinen = false;
+        } else if (arvottu == 0 && !seuraavaHorisontaalinen) {
+            this.laaserit.add(new Laaseri(Suunta.OIKEA, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), 0, rng.nextInt(this.korkeus - 100) + 50, this.laaserienPaksuus));
+            seuraavaHorisontaalinen = true;
+        } else if (arvottu == 1 && !seuraavaHorisontaalinen) {
+            this.laaserit.add(new Laaseri(Suunta.VASEN, Color.red, (rng.nextInt(this.nopeus)+nopeusVaihtelunTasaaja), this.leveys, rng.nextInt(this.korkeus - 100) + 50, this.laaserienPaksuus));
+            seuraavaHorisontaalinen = true;
         }
     }
 
@@ -108,7 +112,7 @@ public class Peli implements Paivitettava {
                    laaseri.setKasvaako(false);
                    i = laaseri.getNopeus();
                    if (!onkoKoordinaatissaPommi(laaseri.getX(), laaseri.getY())) {
-                       this.pommit.add(new Pommi(1, 1, 200 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
+                       this.pommit.add(new Pommi(1, 5, 200 - this.nopeus*20, laaseri.getX(), laaseri.getY(), this.pommienSivunKoko, this.pommienSivunKoko));
                    }
                 }
             }
@@ -151,18 +155,19 @@ public class Peli implements Paivitettava {
     }
     
     /**
-     * Kutsuu tikita metodia kaikille pelin pommeille ja kutsuu rajaytaPommi
-     * metodia, jos rajahtaakoPommi muuttuu tikityksen seurauksena trueksi.
+     * Kutsuu tikita metodia kaikille pelin pommeille ja kutsuu havitaPommi
+     * metodia ja poistaa elämää, jos rajahtaakoPommi muuttuu tikityksen 
+     * seurauksena trueksi.
      */
     public void tikitaPommeja() {
         for (Pommi pommi : this.pommit) {
             pommi.tikita();
             if (pommi.rajahtaakoPommi()) {
-                rajaytaPommi(pommi);
+                this.elama -= pommi.getVoimakkuus();
+                havitaPommi(pommi);
             }
         }
     }
-    
     
     /**
      * Testaa onko parametreina annetussa koordinaatissa pommi.
@@ -184,7 +189,7 @@ public class Peli implements Paivitettava {
      * poistaPomminLaaseri metodia parametrillaan.
      * @param pommi räjäytettävä pommi
      */
-    public void rajaytaPommi(Pommi pommi) {
+    public void havitaPommi(Pommi pommi) {
         pommi.setPoistetaanko(true);
         poistaPomminLaaseri(pommi);
     }
@@ -227,7 +232,7 @@ public class Peli implements Paivitettava {
                 && y >= pommi.getY() - pommi.getKorkeus()/2
                 && y < pommi.getY() + pommi.getKorkeus()/2 + 1) {
                 this.pisteet += pommi.otaSaadutPisteet();
-                rajaytaPommi(pommi);
+                havitaPommi(pommi);
                 System.out.println(this.pisteet);
             }
         }
@@ -255,10 +260,37 @@ public class Peli implements Paivitettava {
     public int getPommienSivunKoko() {
         return pommienSivunKoko;
     }
+
+    public int getElama() {
+        return elama;
+    }
+
+    public int getPisteet() {
+        return pisteet;
+    }
+    
     
     // testejä varten
     
     public void lisaaLaaseri(Laaseri laaseri) {
         this.laaserit.add(laaseri);
     }
+
+    public void setNopeus(int nopeus) {
+        this.nopeus = nopeus;
+    }
+
+    public int getNopeus() {
+        return nopeus;
+    }
+
+    public boolean isSeuraavaHorisontaalinen() {
+        return seuraavaHorisontaalinen;
+    }
+
+    public int getPaivitysTilanne() {
+        return paivitysTilanne;
+    }
+    
+    
 }

@@ -4,8 +4,9 @@ package gUI;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
-import peli.Peli;
+import laserdef.peli.Peli;
 
 /**
  * Pääluokka käyttöliittymälle. Luo pelin ikkunan ja sisältää pelin pää loopin.
@@ -29,6 +30,8 @@ public class Kayttoliittyma implements Runnable {
         this.frame = luoFrame("LaserDef", peli.getLeveys(), peli.getKorkeus());
         this.frame.setVisible(true);
         this.looppaa();
+        infoBox("Räjähdit!  =(\r\nSait " + this.peli.getPisteet()+ " pistettä.", "LaserDef");
+        System.exit(0);
     }
     
     /**
@@ -44,6 +47,7 @@ public class Kayttoliittyma implements Runnable {
         frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame1.getContentPane());
         frame1.pack();
+        frame1.setLocationRelativeTo(null);
         return frame1;
     }
     
@@ -67,7 +71,7 @@ public class Kayttoliittyma implements Runnable {
         int framet = 0, tikit = 0;
         long timer = System.currentTimeMillis();
 
-            while (true) {
+            while (this.peli.getElama() > 0) {
 
                 long currentTime = System.nanoTime();
                 deltaPelinPaivitys += (currentTime - initialTime) / pelinPaivitysAika;
@@ -95,5 +99,9 @@ public class Kayttoliittyma implements Runnable {
                         timer += 1000;
                     }
             }   
+    }
+    
+    public static void infoBox(String viesti, String otsikko) {
+        JOptionPane.showMessageDialog(null, viesti, otsikko, JOptionPane.INFORMATION_MESSAGE);
     }
 }

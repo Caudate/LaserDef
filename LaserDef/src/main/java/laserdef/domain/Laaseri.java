@@ -1,5 +1,5 @@
 
-package domain;
+package laserdef.domain;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class Laaseri {
      * laaserin kärjen sijaintia. Eri suuntaa kulkevia laasereita kasvatetaan
      * omiin suuntiinsa.
      * 
-     * @see domain.LaaserOsa
+     * @see laserdef.domain.LaaserOsa
      */
     public void kasva() {
         if (this.kasvaako) {

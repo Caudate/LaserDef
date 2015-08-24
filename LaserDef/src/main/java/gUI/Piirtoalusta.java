@@ -10,9 +10,11 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import domain.Laaseri;
-import domain.Pommi;
-import peli.Peli;
+import laserdef.domain.Laaseri;
+import laserdef.domain.Pommi;
+import java.awt.Color;
+import main.Suunta;
+import laserdef.peli.Peli;
 
 /**
  * Alusta, joka piirtää kulloisnekin pelitilanteen. 
@@ -23,15 +25,16 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Peli peli;
     private BufferedImage taustaKuva;
     private BufferedImage pommiKuva;
-    
+    private BufferedImage laaseriPysty;
+    private BufferedImage laaseriVaaka;
+//    ImageIO.read(getClass().getResourceAsStream("/taustaKuva_LD.jpg"));
     public Piirtoalusta(Peli peli) {
         this.peli = peli;
         this.addMouseListener(new HiirenKuuntelija(peli));
-        try {                
-          this.taustaKuva = ImageIO.read(getClass().getResourceAsStream("/paint.jpg"));
-          this.pommiKuva = this.teeKuva("/nuke_icon.jpg", this.peli.getPommienSivunKoko(), this.peli.getPommienSivunKoko());
-       } catch (IOException ex) {
-       }
+        this.taustaKuva = this.teeKuva("/taustaKuva_LD.jpg", this.peli.getLeveys(), this.peli.getKorkeus());
+        this.pommiKuva = this.teeKuva("/nuke_icon.jpg", this.peli.getPommienSivunKoko(), this.peli.getPommienSivunKoko());
+        this.laaseriPysty = this.teeKuva("/laaseri_pysty.png", this.peli.getLaaserienPaksuus(), 1);
+        this.laaseriVaaka = this.teeKuva("/laaseri_vaaka.png", 1, this.peli.getLaaserienPaksuus());
     }
 
     /**
@@ -43,6 +46,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         super.paintComponents(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(this.taustaKuva, 0, 0, this.peli.getLeveys(), this.peli.getKorkeus(), null);
+        this.piirraElamaPalkki(g2d);
         this.piirraLaaserit(g2d);
         this.piirraPommit(g2d);
     }
@@ -65,7 +69,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             g2d.setColor(laaser.getVari());
             if (!laaser.isPoistetaanko()) {
                 for (int i = 0; i < laaser.getOsat().size(); i++) {
-                    g2d.fill3DRect(laaser.getOsat().get(i).getX(), laaser.getOsat().get(i).getY(), laaser.getOsat().get(i).getLeveys(), laaser.getOsat().get(i).getKorkeus(), true);
+                    if (laaser.getSuunta() == Suunta.ALAS || laaser.getSuunta() == Suunta.YLOS) {
+                        g2d.drawImage(this.laaseriPysty, laaser.getOsat().get(i).getX(), laaser.getOsat().get(i).getY(), this);
+                    } else {
+                        g2d.drawImage(this.laaseriVaaka, laaser.getOsat().get(i).getX(), laaser.getOsat().get(i).getY(), this);
+                    }
                 }
             }
         }
@@ -75,12 +83,23 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
      * piirtää pelin pommit, jotka eivät ole poistumassa.
      * @param g2d 
      */
-    public void piirraPommit(Graphics g2d) {
+    public void piirraPommit(Graphics2D g2d) {
         for (Iterator<Pommi> iterator = this.peli.getPommit().iterator(); iterator.hasNext();){
             Pommi pommi = iterator.next();
             if (!pommi.isPoistetaanko()) {
                 g2d.drawImage(this.pommiKuva, pommi.getX()-pommi.getLeveys()/2, pommi.getY()-pommi.getKorkeus()/2, this);
             }
+        }
+    }
+    
+    /**
+     * piirtaa energia palkin.
+     * @param g2d 
+     */
+    public void piirraElamaPalkki(Graphics2D g2d) {
+        for (int i = 0; i < this.peli.getElama(); i++) {
+            g2d.setColor(Color.GREEN);
+            g2d.fillRect(10, i + 10, 13, 1);
         }
     }
     

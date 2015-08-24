@@ -2,14 +2,14 @@
 package main;
 
 import gUI.Kayttoliittyma;
-import peli.Peli;
+import laserdef.peli.Peli;
 
 
 public class Main {
 
  
     public static void main(String[] args) {
-        Peli laserDef = new Peli(600, 600, 8);
+        Peli laserDef = new Peli(1020, 800, 5);
         Kayttoliittyma kayttis = new Kayttoliittyma(laserDef);
         kayttis.run();
     }

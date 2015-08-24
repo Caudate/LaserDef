@@ -1,5 +1,5 @@
 
-package domain;
+package laserdef.domain;
 
 
 public class Seina extends Kohde {

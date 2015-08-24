@@ -1,10 +1,10 @@
 
-package peli;
+package laserdef.peli;
 
-import peli.Peli;
+import laserdef.peli.Peli;
 import java.awt.Color;
-import domain.Laaseri;
-import domain.Pommi;
+import laserdef.domain.Laaseri;
+import laserdef.domain.Pommi;
 import main.Suunta;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -30,12 +30,60 @@ public class PeliTest {
         this.peli.getLaaserit().get(2).setNopeus(1);
         this.peli.lisaaLaaseri(new Laaseri(Suunta.VASEN, Color.gray, 2, 4, 5, 1));
         this.peli.getLaaserit().get(3).setNopeus(2);
-        this.peli.getPommit().add(new Pommi(1, 1, 5, 1, 1, 1, 1));
+        this.peli.getPommit().add(new Pommi(1, 1, 5, 1, 1, 4, 4));
     }
     
     @Test
     public void peliOnOlemassa() {
         assertTrue(this.peli!=null);
+    }
+    
+    //paivita testit
+    
+    @Test
+    public void paivitaPoistaaPoistettavatLaaserit() {
+        peli.getLaaserit().get(0).setPoistetaanko(true);
+        peli.paivita();
+        assertEquals(4, peli.getLaaserit().size());
+    }
+    
+    @Test
+    public void paivitaPoistaaPoistettavatPommit() {
+        this.peli.getPommit().get(0).setPoistetaanko(true);
+        peli.paivita();
+        assertEquals(0, this.peli.getPommit().size());
+    }
+    
+    @Test
+    public void paivitaEiArvoLaasereitaKunEiOleAika() {
+        this.peli.paivita();
+        this.peli.paivita();
+        assertEquals(5, this.peli.getLaaserit().size());
+    }
+    
+    @Test
+    public void paivitaArpooLaasereitaKunOnAika() {
+        this.peli.paivita();
+        assertEquals(5, this.peli.getLaaserit().size());
+    }
+    
+    @Test
+    public void paivitaKasvattaaPaivitysTilannetta() {
+        this.peli.paivita();
+        this.peli.paivita();
+        assertEquals(2, this.peli.getPaivitysTilanne());
+    }
+    
+    @Test
+    public void paivitaKasvattaaLaasereita() {
+        this.peli.paivita();
+        assertEquals(297, this.peli.getLaaserit().get(0).getY());
+    }
+    
+    @Test
+    public void paivitaTikittaaPommeja() {
+        this.peli.paivita();
+        assertEquals(4, this.peli.getPommit().get(0).getAikaRajahdykseen());
     }
     
     //KasvataLaasereita Testit
@@ -99,6 +147,14 @@ public class PeliTest {
     }
     
     @Test
+    public void kasvataLaasereitaLuoPommilleOikeanAjanRajahdykseen() {
+        for (int i=0; i < 10; i++) {
+            this.peli.kasvataLaasereita();
+        }
+        assertEquals(200 - this.peli.getNopeus()*20, this.peli.getPommit().get(1).getAikaRajahdykseen());
+    }
+    
+    @Test
     public void kasvataLaasereitaEiMuutaKaasvaakoTrueksiJosEiOsu() {
         for (int i=0; i < 10; i++) {
             this.peli.kasvataLaasereita();
@@ -146,6 +202,15 @@ public class PeliTest {
         assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
     }
     
+    @Test
+    public void tikitaPommejaVahentaaElamaaJosPommiRajahtaa() {
+        int alkuElama = this.peli.getElama();
+        for(int i = 0; i < 5; i++) {
+            this.peli.tikitaPommeja();
+        }
+        assertEquals(alkuElama-1, this.peli.getElama());
+    }
+    
     //OnkoKoordinaatissaPommiTestit
     
     @Test
@@ -162,14 +227,14 @@ public class PeliTest {
     
     @Test
     public void rajaytaPommiAsettaaPoistetaankoTrue() {
-        this.peli.rajaytaPommi(this.peli.getPommit().get(0));
+        this.peli.havitaPommi(this.peli.getPommit().get(0));
         assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
     }
     
     @Test
     public void rajaytaPommiPoistaaPomminLaaserin() {
         this.peli.getLaaserit().add(new Laaseri(Suunta.YLOS, Color.gray, 1, 1, 2, 1));
-        this.peli.rajaytaPommi(this.peli.getPommit().get(0));
+        this.peli.havitaPommi(this.peli.getPommit().get(0));
         assertTrue(this.peli.getLaaserit().get(4).isPoistetaanko());
     }
     
@@ -206,6 +271,8 @@ public class PeliTest {
         assertEquals(1, peli.getPommit().size());
     }
     
+    //PoistaPoistettavatLaaseritTestit
+    
     @Test
     public void poistaPoistettavatLaaseritPoistaaOikeanMaaran() {
         peli.getLaaserit().get(0).setPoistetaanko(true);
@@ -214,13 +281,13 @@ public class PeliTest {
         assertEquals(2, peli.getLaaserit().size());
     }
     
-    //PoistaPoistettavatLaaseritTestit
-    
     @Test
     public void poistaPoistettavatLaaseritEiPoistaKunEiOlePoistettavaa() {
         peli.poistaPoistettavatLaaserit();
         assertEquals(4, peli.getLaaserit().size());
     }
+    
+    //lisaaLaaseri Testi
     
     @Test
     public void lisaaLaaseriToimii() {
@@ -229,6 +296,94 @@ public class PeliTest {
         assertEquals(laaseri, this.peli.getLaaserit().get(this.peli.getLaaserit().size()-1));
     }
     
+    //ArvoUusiLaaseri testit
+    
+    @Test
+    public void tekeeUudenLaaserin() {
+        this.peli.arvoUusiLaaseri();
+        assertEquals(5, peli.getLaaserit().size());
+    }
+    
+    @Test
+    public void muuttaaSeuraavanLaaserinKulman() {
+        boolean alkuperainen = this.peli.isSeuraavaHorisontaalinen();
+        this.peli.arvoUusiLaaseri();
+        assertEquals(!alkuperainen, this.peli.isSeuraavaHorisontaalinen());
+    }
+    
+    // Painettu testit
+    
+    @Test
+    public void painettuEiHavitaPommiaJosEiOsu() {
+        this.peli.painettu(5, 1);
+        assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuEiOtaPisteitaJosEiOsu() {
+        this.peli.painettu(5, 1);
+        assertEquals(0, this.peli.getPisteet());
+    }
+    
+    @Test
+    public void painettuHavittaaPomminJosOsuu() {
+        this.peli.painettu(1, 1);
+        assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuOttaaPisteetOsuu() {
+        this.peli.painettu(1, 1);
+        assertEquals(6,  peli.getPisteet());
+    }
+    
+    @Test
+    public void painettuVasenYlaKulmaOsuuPommiin() {
+        this.peli.painettu(-1, 3);
+        assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuVasenAlaKulmaOsuuPommiin() {
+        this.peli.painettu(-1, -1);
+        assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuOikeaAlaKulmaOsuuPommiin() {
+        this.peli.painettu(3, -1);
+        assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuOikeaYlaKulmaOsuuPommiin() {
+        this.peli.painettu(3, 3);
+        assertTrue(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuEiOsuXLiianIso() {
+        this.peli.painettu(4, 1);
+        assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuEiOsuXLiianPieni() {
+        this.peli.painettu(-2, 1);
+        assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuEiOsuYLiianPieni() {
+        this.peli.painettu(1, -2);
+        assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
+    }
+    
+    @Test
+    public void painettuEiOsuYLiianIso() {
+        this.peli.painettu(1, 4);
+        assertFalse(this.peli.getPommit().get(0).isPoistetaanko());
+    }
     // Getterit ja Setterit
     
     @Test
@@ -243,7 +398,7 @@ public class PeliTest {
     
     @Test
     public void getLaaserienPaksuusPalauttaaOikein() {
-        assertEquals(5, this.peli.getLaaserienPaksuus());
+        assertEquals(7, this.peli.getLaaserienPaksuus());
     }
     
     @Test
