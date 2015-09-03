@@ -1,7 +1,9 @@
 
 package laserdef.domain;
 
-
+/**
+ * Pommeja hallinnoiva luokka, joka toteuttaa kohteen.
+ */
 public class Pommi extends Kohde {
     
     int aikaRajahdykseen;
@@ -17,14 +19,27 @@ public class Pommi extends Kohde {
         this.poistetaanko = false;
     }
     
+    /**
+     * Palauttaa ansaitut pisteet, jotka on pommille asetettu ominaispistemäärä
+     * + jäljellä olevien tikitysten määrän räjähdykseen.
+     * @return 
+     */
     public int otaSaadutPisteet() {
         return this.pisteet + this.aikaRajahdykseen;
     }
     
+    /**
+     * Vähentää aikaa räjähdykseen.
+     */
     public void tikita() {
         this.aikaRajahdykseen--;
     }
     
+    /**
+     * Vastaa kysymykseen, onko pommin aika räjähtää. Räjähtää kun aikaa räjähdykseen
+     * on jäljellä alle 1.
+     * @return 
+     */
     public boolean rajahtaakoPommi() {
         if (this.aikaRajahdykseen < 1) {
             return true;

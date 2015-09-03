@@ -1,7 +1,7 @@
 
 package main;
 
-import gUI.Kayttoliittyma;
+import kayttoliittyma.Kayttoliittyma;
 import laserdef.peli.Peli;
 
 
@@ -9,7 +9,7 @@ public class Main {
 
  
     public static void main(String[] args) {
-        Peli laserDef = new Peli(1020, 800, 5);
+        Peli laserDef = new Peli(600, 600, 6);
         Kayttoliittyma kayttis = new Kayttoliittyma(laserDef);
         kayttis.run();
     }

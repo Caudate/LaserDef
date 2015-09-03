@@ -55,7 +55,7 @@ public abstract class Kohde {
      * @param korkeus 
      */
     public void setKorkeus(int korkeus) {
-            this.korkeus = korkeus;
+        this.korkeus = korkeus;
     }
     
     /**
@@ -71,7 +71,7 @@ public abstract class Kohde {
      * @param leveys 
      */
     public void setLeveys(int leveys) {
-            this.leveys = leveys;
+        this.leveys = leveys;
     }
 
     /**

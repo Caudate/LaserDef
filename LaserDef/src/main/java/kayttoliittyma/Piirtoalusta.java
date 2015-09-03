@@ -1,5 +1,5 @@
 
-package gUI;
+package kayttoliittyma;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,7 +17,7 @@ import main.Suunta;
 import laserdef.peli.Peli;
 
 /**
- * Alusta, joka piirtää kulloisnekin pelitilanteen. 
+ * Alusta, joka piirtää kulloisekin pelitilanteen. 
  * Perii JPanelin ja toteuttaa Runnable rajapinnan.
  */
 public class Piirtoalusta extends JPanel implements Paivitettava {
@@ -27,7 +27,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private BufferedImage pommiKuva;
     private BufferedImage laaseriPysty;
     private BufferedImage laaseriVaaka;
-//    ImageIO.read(getClass().getResourceAsStream("/taustaKuva_LD.jpg"));
+    
     public Piirtoalusta(Peli peli) {
         this.peli = peli;
         this.addMouseListener(new HiirenKuuntelija(peli));
@@ -64,7 +64,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
      * @param g2d 
      */
     public void piirraLaaserit(Graphics2D g2d) {
-        for (Iterator<Laaseri> iterator = this.peli.getLaaserit().iterator(); iterator.hasNext();){
+        for (Iterator<Laaseri> iterator = this.peli.getLaaserit().iterator(); iterator.hasNext();) {
             Laaseri laaser = iterator.next();
             g2d.setColor(laaser.getVari());
             if (!laaser.isPoistetaanko()) {
@@ -84,16 +84,16 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
      * @param g2d 
      */
     public void piirraPommit(Graphics2D g2d) {
-        for (Iterator<Pommi> iterator = this.peli.getPommit().iterator(); iterator.hasNext();){
+        for (Iterator<Pommi> iterator = this.peli.getPommit().iterator(); iterator.hasNext();) {
             Pommi pommi = iterator.next();
             if (!pommi.isPoistetaanko()) {
-                g2d.drawImage(this.pommiKuva, pommi.getX()-pommi.getLeveys()/2, pommi.getY()-pommi.getKorkeus()/2, this);
+                g2d.drawImage(this.pommiKuva, pommi.getX() - pommi.getLeveys() / 2, pommi.getY() - pommi.getKorkeus() / 2, this);
             }
         }
     }
     
     /**
-     * piirtaa energia palkin.
+     * piirtaa elämä palkin.
      * @param g2d 
      */
     public void piirraElamaPalkki(Graphics2D g2d) {
@@ -117,7 +117,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             ImageIcon ii = new ImageIcon(ImageIO.read(getClass().getResourceAsStream(kuvanSijainti)));
             kuva = new BufferedImage(leveys, korkeus, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = (Graphics2D) kuva.createGraphics();
-            g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY));
+            g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
             g2d.drawImage(ii.getImage(), 0, 0, leveys, korkeus, null);
         } catch (Exception e) {
             e.printStackTrace();

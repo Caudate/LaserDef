@@ -37,7 +37,6 @@ public class Laaseri {
     
     /**
      * Testaa osuuko Laaserin kärki tiettyyn kohteeseen.
-     * 
      * @param kohde Kohde johon osumista testataan.
      * @return 
      */
@@ -52,7 +51,7 @@ public class Laaseri {
     /**
      * Muuttaa kasvaako atribuuttia
      * 
-     * @param kasvaako miksi kasvaako muuttutaan
+     * @param kasvaako miksi kasvaako muutetaan
      */
     public void setKasvaako(boolean kasvaako) {
         this.kasvaako = kasvaako;

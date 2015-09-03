@@ -12,3 +12,4 @@
 20150822 - 2h Elämät lisätty ja hienonnettu peliä
 20150824 - 3h Testejä listätty
 20150827 - 2h Sekvenssikaavio ja pelin hienosäätöä
+20150903 - 5h Kaavioiden päivitys. Javadocin kirjoitusta. Pelin viimeistely.

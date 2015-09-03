@@ -151,7 +151,7 @@ public class PeliTest {
         for (int i=0; i < 10; i++) {
             this.peli.kasvataLaasereita();
         }
-        assertEquals(200 - this.peli.getNopeus()*20, this.peli.getPommit().get(1).getAikaRajahdykseen());
+        assertEquals(160 - this.peli.getNopeus()*20, this.peli.getPommit().get(1).getAikaRajahdykseen());
     }
     
     @Test
